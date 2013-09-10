@@ -6,10 +6,14 @@ class CFCDN_CDN{
 
   public $api_settings;
   public $uploads;
+  public $cache_file;
+  public $cache_folder;
 
   function __construct() {
     $this->api_settings = $this->settings();
     $this->uploads = wp_upload_dir();
+    $this->cache_folder = $this->uploads['basedir'] . "/cdn/tmp/";
+    $this->cache_file = $this->cache_folder . "cache.csv";
   }
   
  /**
@@ -33,7 +37,7 @@ class CFCDN_CDN{
   */
   function connection_object(){
   
-    $api_settings = $this->$api_settings;
+    $api_settings = $this->api_settings;
     $connection = new \OpenCloud\Rackspace(
                             $api_settings['url'],
                             array(  'username' => $api_settings['username'],
@@ -48,7 +52,7 @@ class CFCDN_CDN{
   *  Openstack CDN Container Object.
   */
   public function container_object(){
-    $api_settings = $this->$api_settings;
+    $api_settings = $this->api_settings;
     $cdn = $this->connection_object();
     $container = $cdn->Container($api_settings['container']);
     return $container;
@@ -58,17 +62,18 @@ class CFCDN_CDN{
  /**
   * Puts given file attachment onto CDN.
   */
-  public function upload_file( $attachment ){
-    $path = get_attached_file( $attachment->ID );
-    $meta = wp_get_attachment_metadata();
+  public function upload_file( $file_path ){
     
+#    $finfo = new finfo( FILEINFO_MIME, $file_path );
+#    var_dump( $finfo );
+
+
     $container = $this->container_object();
     $file = $container->DataObject();
-    $file->SetData( file_get_contents( $path ) );
-    $file->name = 'pickle.gif';
-    $file->content_type = 'image/jpeg';
+    $file->SetData( file_get_contents( $file_path ) );
+    $file->name = basename($file_path);
+#    $file->content_type = 'image/jpeg';
     $file->Create();
-    
   }
 
 
@@ -77,14 +82,12 @@ class CFCDN_CDN{
   */
   public function get_uploaded_files(){
   
-    $cache_folder = $this->uploads['basedir'] . "/cdn/tmp/";
-    $cache_file = $cache_folder . "cache.csv";
-    if( !file_exists( $cache_file ) ){
-      mkdir( $cache_folder, 0777, true );
+    if( !file_exists( $this->cache_file ) ){
+      mkdir( $this->cache_folder, 0777, true );
     }
 
-    $fp = fopen( $cache_file, 'w' ) or die('Cannot open file:  ' . $cache_file );
-    $files = array_diff( str_getcsv( $cache_file ), array(".", "..", $cache_file) );
+    $fp = fopen( $this->cache_file, 'w' ) or die('Cannot open file:  ' . $this->cache_file );
+    $files = array_diff( str_getcsv( $this->cache_file ), array(".", "..", $this->cache_file) );
     fclose( $fp );
 
     return $files;
