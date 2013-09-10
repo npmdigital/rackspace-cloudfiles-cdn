@@ -1,5 +1,6 @@
-<?php defined('CFCDN_PATH') or die();?>
-<?php $settings = cfcdn_settings();?>
+<?php defined('CFCDN_PATH') or die(); ?>
+<?php cfcdn_save_settings(); ?>
+<?php $settings = cfcdn_settings(); error_log( var_export($settings, true) )?>
 
 <div class="wrap cfcdn">
 
@@ -84,7 +85,7 @@
         <tr valign="top">
           <th scope="row"><label for="cfcdn[username]">Username</label></th>
           <td>
-            <input name="cfcdn[username]" type="text" value="<?php echo $settings->username;?>" class="regular-text" required="required" />
+            <input name="cfcdn[username]" type="text" value="<?php echo $settings['username'];?>" class="regular-text" required="required" />
           </td>
         </tr>
 
@@ -92,14 +93,14 @@
         <tr valign="top">
           <th scope="row"><label for="cfcdn[api_key]">API Key</label></th>
           <td>
-            <input name="cfcdn[api_key]" type="text" value="<?php echo $settings->api_key;?>" class="regular-text" required="required" />
+            <input name="cfcdn[api_key]" type="text" value="<?php echo $settings['api_key'];?>" class="regular-text" required="required" />
           </td>
         </tr>
 
         <tr valign="top">
           <th scope="row"><label for="cfcdn[container]">Container</label></th>
           <td>
-            <input name="cfcdn[container]" type="text" value="<?php echo $settings->container;?>" class="regular-text" required="required" />
+            <input name="cfcdn[container]" type="text" value="<?php echo $settings['container'];?>" class="regular-text" required="required" />
           </td>
         </tr>
 

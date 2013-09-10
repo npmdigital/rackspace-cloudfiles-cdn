@@ -25,6 +25,7 @@ define('CFCDN_PATH', ABSPATH.PLUGINDIR.'/rackspace-cloudfiles-cdn/');
 define('CFCDN_URL', WP_PLUGIN_URL.'/rackspace-cloudfiles-cdn/');
 define('CFCDN_ROUTE', get_bloginfo('url').'/?cfcdn_routing=');
 define('CFCDN_UPLOAD_CURL', CFCDN_ROUTE . "upload_ping" );
+define('CFCDN_OPTIONS', "wp_cfcdn_settings" );
 require_once(ABSPATH.'wp-admin/includes/upgrade.php');
 require_once("lib/db_setup.php");
 require_once("lib/functions.php");

@@ -24,7 +24,19 @@ function cfcdn_get_local_attachments(){
  * CloudFiles CDN Settings
  */
 function cfcdn_settings(){
-  
+  return get_option( CFCDN_OPTIONS );
+}
+
+
+
+/**
+ * Save CloudFiles CDN Settings
+ */
+function cfcdn_save_settings(){
+  if( is_admin() && current_user_can('manage_options') && !empty($_POST) && !empty($_POST['cfcdn']) ){
+    $settings = $_POST['cfcdn'];
+    update_option( CFCDN_OPTIONS, $settings );
+  }
 }
 
 ?>
