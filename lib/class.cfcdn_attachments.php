@@ -6,7 +6,7 @@
 class CFCDN_Attachments{
 
   public $uploads;
-
+  public $uploaded_files;
 
   function __construct() {
     $this->uploads = wp_upload_dir();
@@ -29,6 +29,7 @@ class CFCDN_Attachments{
     $path = $this->uploads['basedir'];
 
     $files = new RecursiveIteratorIterator( new RecursiveDirectoryIterator($path) );
+    var_dump( $this->uploaded_files );
     foreach( $files as $name => $file_info ){
       if ( substr( $name, -1 ) != "." && substr( $name, -2 ) != ".." ){
   #      echo "$name<br />";
@@ -64,14 +65,9 @@ class CFCDN_Attachments{
   * Uses a persistance file in uploads folder
   */
   public function load_cache(){
-    $cache_file = $this->uploads['basedir'] . "/cdn/tmp/cache.txt";
-    if( !file_exists( $cache_file ) ){
-      $fp = fopen( $cache_file, 'w' ) or die('Cannot open file:  ' . $cache_file );
-    }
+    $cdn = new CFCDN_CDN();
+    $this->uploaded_files = $cdn->get_uploaded_files();
 
-    
-
-    fclose( $fp );
   }
 
   

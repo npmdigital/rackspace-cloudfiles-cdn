@@ -5,9 +5,11 @@
 class CFCDN_CDN{
 
   public $api_settings;
+  public $uploads;
 
   function __construct() {
     $this->api_settings = $this->settings();
+    $this->uploads = wp_upload_dir();
   }
   
  /**
@@ -68,6 +70,26 @@ class CFCDN_CDN{
     $file->Create();
     
   }
+
+
+ /**
+  * List of files uploaded to CDN as recorded in cache file.
+  */
+  public function get_uploaded_files(){
+  
+    $cache_folder = $this->uploads['basedir'] . "/cdn/tmp/";
+    $cache_file = $cache_folder . "cache.csv";
+    if( !file_exists( $cache_file ) ){
+      mkdir( $cache_folder, 0777, true );
+    }
+
+    $fp = fopen( $cache_file, 'w' ) or die('Cannot open file:  ' . $cache_file );
+    $files = str_getcsv( $cache_file );
+    fclose( $fp );
+
+    return $files;
+  }
+
 
 
 
