@@ -32,6 +32,7 @@ require_once("lib/functions.php");
 require_once("admin/functions.php");
 require_once("lib/class.cfcdn_cdn.php");
 require_once("lib/class.cfcdn_attachments.php");
+require_once("lib/class.cfcdn_util.php");
 require_once("lib/php-opencloud-1.5.10/lib/php-opencloud.php");
 
 
@@ -79,7 +80,7 @@ function cfcdn_admin_js() {
  */
 function cfcdn_parse_upload_ping($wp) {
   if (array_key_exists('cfcdn_routing', $wp->query_vars) && $wp->query_vars['cfcdn_routing'] == 'upload_ping') {
-    cfcdn_upload_all();
+    CFCDN_Util::upload_all();
     die();exit();
   }
 }add_action('parse_request', 'cfcdn_parse_upload_ping');

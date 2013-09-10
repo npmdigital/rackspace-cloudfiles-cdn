@@ -24,10 +24,11 @@ class CFCDN_CDN{
                                'apiKey' => 'YOUR API KEY',
                                'container' => 'YOUR CONTAINER',
                                'public_url' => 'http://YOUR LONG URL.rackcdn.com',
+                               'region' => 'DFW',
                                'url' => 'https://identity.api.rackspacecloud.com/v2.0/',
                                'serviceName' => 'cloudFiles',
-                               'region' => 'DFW',
-                               'urltype' => 'publicURL' );
+                               'urltype' => 'publicURL',
+                               'first_upload' => "false" );
   
     return get_option( CFCDN_OPTIONS, $default_settings );
   }

@@ -12,6 +12,11 @@
 
   <h3>Moving Files To CDN</h3>
 
+  <?php if($settings["first_upload"] !== "true"): ?>
+    <div id="setting-error-settings_updated" class="updated settings-error"> 
+      <p><strong>Waiting on first upload</strong><br />You have not run your first upload to the CDN. Click the manual upload button to move your existing files to the CDN and finish plugin activation.</p>
+    </div>
+  <?php endif; ?>
 
   <table class="form-table">
     <tbody>
@@ -21,7 +26,7 @@
         <td>
           <p>
             <a href="" class="button">Upload Now</a><br />
-            <span class="description">Click this button to uploads attachments to CDN.</span>
+            <span class="description">Click this button to uploads attachments to CDN for the first time.</span>
           </p>
         </td>
       </tr>
@@ -90,7 +95,6 @@
           </td>
         </tr>
 
-
         <tr valign="top">
           <th scope="row"><label for="cfcdn[apiKey]">API Key</label></th>
           <td>
@@ -109,13 +113,22 @@
           <th scope="row"><label for="cfcdn[public_url]">Public URL to Container</label></th>
           <td>
             <input name="cfcdn[public_url]" type="text" value="<?php echo $settings['public_url'];?>" class="regular-text" required="required" />
-            <span class="description">No trailing slash.</span>
+            <br />
+            <span class="description">Get from Rackspace account dashboard, without trailing slash.</span>
           </td>
         </tr>
 
+        <tr valign="top">
+          <th scope="row"><label for="cfcdn[region]">Region</label></th>
+          <td>
+            <input name="cfcdn[region]" type="text" value="<?php echo $settings['region'];?>" class="regular-text" required="required" />
+            <br />
+            <span class="description">Rackspace filestore region, DFW (Dallas) or ORD (Chicago).</span>
+          </td>
+        </tr>
 
         <tr valign="top">
-          <th scope="row"><label for="cfcdn[url]">URL</label></th>
+          <th scope="row"><label for="cfcdn[url]">API Version URL</label></th>
           <td>
             <input name="cfcdn[url]" type="text" value="<?php echo $settings['url'];?>" class="regular-text" required="required" readonly="readonly" />
           </td>
@@ -130,12 +143,6 @@
         </tr>
 
 
-        <tr valign="top">
-          <th scope="row"><label for="cfcdn[region]">Region</label></th>
-          <td>
-            <input name="cfcdn[region]" type="text" value="<?php echo $settings['region'];?>" class="regular-text" required="required" readonly="readonly" />
-          </td>
-        </tr>
 
         <tr valign="top">
           <th scope="row"><label for="cfcdn[urltype]">URL Type</label></th>
