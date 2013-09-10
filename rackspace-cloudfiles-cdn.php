@@ -25,6 +25,7 @@ define('CFCDN_PATH', ABSPATH.PLUGINDIR.'/rackspace-cloudfiles-cdn/');
 define('CFCDN_URL', WP_PLUGIN_URL.'/rackspace-cloudfiles-cdn/');
 define('CFCDN_ROUTE', get_bloginfo('url').'/?cfcdn_routing=');
 define('CFCDN_UPLOAD_CURL', CFCDN_ROUTE . "upload_ping" );
+define('CFCDN_DELETE_CURL', CFCDN_ROUTE . "delete_ping" );
 define('CFCDN_NEEDING_UPLOAD_JSON', CFCDN_ROUTE . "needing_upload.json" );
 define('CFCDN_OPTIONS', "wp_cfcdn_settings" );
 define('CFCDN_LOADIND_URL', WP_PLUGIN_URL.'/rackspace-cloudfiles-cdn/assets/images/loading.gif');
@@ -77,49 +78,43 @@ function cfcdn_admin_js() {
 
 
 
-/**
- * Uploads files to Cloudfiles CDN on GET request to "/?cfcdn_routing=upload_ping".
- */
-function cfcdn_parse_upload_ping($wp) {
-  if (array_key_exists('cfcdn_routing', $wp->query_vars) && $wp->query_vars['cfcdn_routing'] == 'upload_ping') {
-    CFCDN_Util::upload_all();
-    die();exit();
-  }
-}add_action('parse_request', 'cfcdn_parse_upload_ping');
 
 
 /**
- * List of files that need to be uploaded, GET "/?cfcdn_routing=needing_upload.json".
+ * Parse requests from specific URLs.
  */
-function cfcdn_parse_needing_upload_json($wp) {
-  if (array_key_exists('cfcdn_routing', $wp->query_vars) && $wp->query_vars['cfcdn_routing'] == 'needing_upload.json') {
-    $attachments = new CFCDN_Attachments();
-    echo $attachments->needing_upload_as_json();
-    die();exit();
-  }
-}add_action('parse_request', 'cfcdn_parse_needing_upload_json');
+function cfcdn_parse_url_requests($wp) {
+  if (array_key_exists('cfcdn_routing', $wp->query_vars) ) {
 
-
-/**
- * Uploads individual file to Cloudfiles CDN on GET request to "/?cfcdn_routing=upload_file&path={PATH_TO_FILE}".
- */
-function cfcdn_parse_upload_file($wp) {
-  if (array_key_exists('cfcdn_routing', $wp->query_vars) && $wp->query_vars['cfcdn_routing'] == 'upload_file') {
-    $file_path = $_GET['path'];
-    $cdn = new CFCDN_CDN();
-    if( !empty( $file_path ) ){
-      $cdn->upload_file( $file_path );
-      echo "Uploading $file_path";
+    /* Uploads files to Cloudfiles CDN on GET request to "/?cfcdn_routing=upload_ping".*/
+    if ( $wp->query_vars['cfcdn_routing'] == 'upload_ping') {
+      CFCDN_Util::upload_all();
     }
-    $cdn->update_setting( "first_upload", "true" );
+
+    /* List of files that need to be uploaded, GET "/?cfcdn_routing=needing_upload.json". */
+    if ( $wp->query_vars['cfcdn_routing'] == 'needing_upload.json') {
+      $attachments = new CFCDN_Attachments();
+      echo $attachments->needing_upload_as_json();
+    }
+
+    /* Uploads individual file to Cloudfiles CDN on GET request to "/?cfcdn_routing=upload_file&path={PATH_TO_FILE}". */
+    if ( $wp->query_vars['cfcdn_routing'] == 'upload_file') {
+      $file_path = $_GET['path'];
+      $cdn = new CFCDN_CDN();
+      if( !empty( $file_path ) ){
+        $cdn->upload_file( $file_path );
+        echo "Uploading $file_path";
+      }
+      $cdn->update_setting( "first_upload", "true" );
+    }
+
+    /* Delete local files that are already pushed to CDN on GET request to "/?cfcdn_routing=delete_ping".*/
+    if ( $wp->query_vars['cfcdn_routing'] == 'delete_ping') {
+      CFCDN_Util::delete_local_files();
+    }
     die();exit();
   }
-}add_action('parse_request', 'cfcdn_parse_upload_file');
-
-
-
-
-
+}add_action('parse_request', 'cfcdn_parse_url_requests');
 
 
 function cfcdn_parse_query_vars($vars) {

@@ -1,4 +1,4 @@
-=== Rackspace CloudFile CDN ===
+=== Rackspace CloudFiles CDN ===
 Donate link: http://labs.saidigital.co
 Tags: cdn, rackspace
 Requires at least: 3.0.1
@@ -7,11 +7,11 @@ Stable tag: 4.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A plugin that moves attachments to Rackspace Cloudfiles.
+A plugin that moves attachments to Rackspace Cloudfiles CDN.
 
 == Description ==
 
-Moves attachments to Cloudfiles manually or automatically (with cron), and rewrites URL in content. Optionally delete files off local server or pull back down from Cloufiles.
+Moves files uploaded through Media Manager to Cloudfiles automatically, and rewrites URL in content. Optionally delete local files after CDN upload.
 
 == Installation ==
 
@@ -21,20 +21,24 @@ Moves attachments to Cloudfiles manually or automatically (with cron), and rewri
 
 = Is this a caching plugin? =
 
-No! This plugin is for putting attachments on a CDN where they belong because WordPress has no native feature for that. This is not a caching plugin and it is not intended to be.
+No. This plugin is for putting WordPress Attachments and files in the WordPress uploads directory on a CDN where they belong because WordPress has no native feature for that. This is not a caching plugin and it is not intended to be.
 
 = Does this plugin require other plugins to be installed to work correctly? =
 
-No, in the spirit of `separation of means/functionality`, this plugin simply connects attachments to a CDN network.
+No. This plugin simply pushes all uploaded files to a CDN network.
 
-= Do this plugin remove local copies of file? =
+= Does this plugin remove the local copy of the file? =
 
-You can optionally have the plugin remove the local copy of the attachment since it is not needed and taking up valuable server space. Yes can also pull all the downloads back down to local attachments and deactivate the plugin with no harm done.
+You can optionally have the plugin remove the local copy of the file since it is not needed and taking up valuable server space. 
+
+= Does this plugin handle theme or other plugin assets (Images, CSS, JavaScript)? =
+
+No. Those things typically belong in revision control and you should have your deployment system take care of their linking.
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif)
-2. This screen shot description corresponds to screenshot-2.(png|jpg|jpeg|gif)
+1. Beautifully simple management
+2. Example output in content
 
 == Changelog ==
 

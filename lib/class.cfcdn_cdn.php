@@ -28,7 +28,8 @@ class CFCDN_CDN{
                                'url' => 'https://identity.api.rackspacecloud.com/v2.0/',
                                'serviceName' => 'cloudFiles',
                                'urltype' => 'publicURL',
-                               'first_upload' => "false" );
+                               'first_upload' => 'false',
+                               'delete_local_files' => 'true' );
   
     return get_option( CFCDN_OPTIONS, $default_settings );
   }

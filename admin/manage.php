@@ -9,86 +9,87 @@
   <div class="clear"></div>
   <hr />
 
-
-  <h3>Moving Files To CDN</h3>
-
-  <?php if($settings["first_upload"] !== "true"): ?>
-    <div id="setting-error-settings_updated" class="updated settings-error"> 
-      <p><strong>Waiting on first upload</strong><br />You have not run your first upload to the CDN. Click the manual upload button to move your existing files to the CDN and finish plugin activation.</p>
-    </div>
-  <?php endif; ?>
-
-  <table class="form-table">
-    <tbody>
-
-      <tr valign="top">
-        <th scope="row"><label>Manual Upload</label></th>
-        <td>
-          <p>
-            <a href="#" class="button" id="cfcdn_manual_upload" data-blogurl="<?php echo site_url();?>">Upload Now</a>
-            <br />
-            <span class="description">Click this button to manually upload attachments to CDN.</span>
-            <br />
-            <span id="cfcdn_info" class="description" style="display:none">
-              <img class="cfcdn_loading" style="display:none" src="<?php echo CFCDN_LOADIND_URL;?>" />
-            </span>
-          </p>
-        </td>
-      </tr>
-        
-      <tr valign="top">
-        <th scope="row"><label>Cron Upload</label></th>
-        <td>
-          <input type="text" class="regular-text" readonly="readonly" value="<?php echo CFCDN_UPLOAD_CURL;?>" />
-          <a class="button" target="_blank" href="<?php echo CFCDN_UPLOAD_CURL;?>">Go</a>
-          <p><span class="description">Hit this URL to move files to CDN. <a href="" target="_blank">Example cron file</a>.</span></p>
-          <div id="cfcdn_move_files"></div>
-        </td>
-      </tr>
-
-    </tbody>
-  </table>
-
-
-
-  <h3>Manage Files</h3>
-
-
-  <table class="form-table">
-    <tbody>
-
-      <tr valign="top">
-        <th scope="row"><label>Delete Local Files</label></th>
-        <td>
-          <a href="" class="button">Delete Files</a>
-          <span class="description">Click here to delete local copies of attachment files.</span>
-        </td>
-      </tr>
-
-
-
-      <tr valign="top">
-        <th scope="row"><label>Download Files</label></th>
-        <td>
-          <a href="" class="button">Download Files</a>
-          <span class="description">Click here to download files off Cloudfiles into local WordPress.</span>
-        </td>
-      </tr>
-
-    </tbody>
-  </table>
-
-
-  
-
-
-
-  <br />
-
-
-  <h3>Rackspace CDN Settings</h3>
-
   <form method="post" action="">
+
+    <h3>Moving Files To CDN</h3>
+  
+    <?php if($settings["first_upload"] !== "true"): ?>
+      <div id="setting-error-settings_updated" class="updated settings-error"> 
+        <p><strong>Waiting on first upload</strong><br />You have not run your first upload to the CDN. Click the manual upload button to move your existing files to the CDN and finish plugin activation.</p>
+      </div>
+    <?php else: ?>
+      <input type="hidden" name="cfcdn[first_upload]" value="true" />
+    <?php endif; ?>
+  
+    <table class="form-table">
+      <tbody>
+  
+        <tr valign="top">
+          <th scope="row"><label>Manual Upload</label></th>
+          <td>
+            <p>
+              <a href="#" class="button" id="cfcdn_manual_upload" data-blogurl="<?php echo site_url();?>">Upload Now</a>
+              <br />
+              <span class="description">Click this button to manually upload attachments to CDN.</span>
+              <br />
+              <span id="cfcdn_info" class="description" style="display:none">
+                <img class="cfcdn_loading" style="display:none" src="<?php echo CFCDN_LOADIND_URL;?>" />
+              </span>
+            </p>
+          </td>
+        </tr>
+          
+        <tr valign="top">
+          <th scope="row"><label>Cron Upload</label></th>
+          <td>
+            <input type="text" class="regular-text" readonly="readonly" value="<?php echo CFCDN_UPLOAD_CURL;?>" />
+            <a class="button" target="_blank" href="<?php echo CFCDN_UPLOAD_CURL;?>">Go</a>
+            <p><span class="description">Optionally hit this URL with a cron job to help keep files in sync.</span></p>
+            <div id="cfcdn_move_files"></div>
+          </td>
+        </tr>
+  
+      </tbody>
+    </table>
+  
+  
+  
+    <h3>Manage Files</h3>
+  
+    <table class="form-table">
+      <tbody>
+  
+        <tr valign="top">
+          <th scope="row"><label>Delete Local Files?</label></th>
+          <td>
+            <input type="hidden" name="cfcdn[delete_local_files]" value="false" />
+            <input type="checkbox" name="cfcdn[delete_local_files]" value="true" <?php echo ($settings['delete_local_files'] == 'true') ? 'checked' : ''; ?> />
+            <span class="description">Delete local files once they are uploaded to CDN.</span>
+          </td>
+        </tr>
+  
+        <tr valign="top">
+          <th scope="row"><label>Cron delete</label></th>
+          <td>
+            <input type="text" class="regular-text" readonly="readonly" value="<?php echo CFCDN_DELETE_CURL;?>" />
+            <a class="button" target="_blank" href="<?php echo CFCDN_DELETE_CURL;?>">Go</a>
+            <p><span class="description">Ping this URL to delete local files automatically once they are on CDN.</span></p>
+          </td>
+        </tr>
+  
+      </tbody>
+    </table>
+  
+  
+    
+  
+  
+  
+    <br />
+  
+  
+    <h3>Rackspace CDN Settings</h3>
+
     
     <table class="form-table">
       <tbody>

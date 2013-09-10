@@ -14,6 +14,13 @@ class CFCDN_Util{
   }
 
   
+ /**
+  * Deltes all local files that are uploaded to CDN. 
+  */
+  public function delete_local_files(){
+    $attachments = new CFCDN_Attachments();
+    $attachments->delete_local_files();
+  }
   
 } 
 
