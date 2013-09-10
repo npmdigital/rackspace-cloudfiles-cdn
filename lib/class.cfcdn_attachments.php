@@ -12,10 +12,13 @@ class CFCDN_Attachments{
   public $uploaded_files;
   public $file_needing_upload;
 
+
   function __construct() {
+  
     $this->uploads = wp_upload_dir();
     $this->load_cache();
     $this->load_local_files();
+
   }
 
 
@@ -31,11 +34,12 @@ class CFCDN_Attachments{
   public function upload_all(){
     $cdn = new CFCDN_CDN();
     $this->load_files_needing_upload();
+    var_dump( $this->files_needing_upload );
 
     foreach( $this->files_needing_upload as $file_path ){
       $cdn->upload_file( $file_path );
+      echo "Uploaded: $file_path\n";
     }
-    
     echo "All files uploaded.";
   }
 

@@ -72,6 +72,7 @@ class CFCDN_CDN{
     $file->name = $relative_file_path;
     $file->Create();
 
+    $this->write_to_cache( $file_path );
   }
 
 
@@ -84,13 +85,27 @@ class CFCDN_CDN{
       mkdir( $this->cache_folder, 0777, true );
     }
 
-    $fp = fopen( $this->cache_file, 'w' ) or die('Cannot open file:  ' . $this->cache_file );
+    $fp = fopen( $this->cache_file, 'r' ) or die('Cannot open file:  ' . $this->cache_file );
     $files = array_diff( str_getcsv( $this->cache_file ), array(".", "..", $this->cache_file) );
     fclose( $fp );
 
     return $files;
   }
 
+
+ /**
+  * Write file path the cache file once file is uploaded to CDN.
+  */
+  public function write_to_cache( $file_path ){
+
+    $fp = fopen( $this->cache_file, 'a' ) or die('Cannot open file:  ' . $this->cache_file );
+    fwrite( $fp, $file_path . "\n" );
+    fclose( $fp );
+
+#    $current_cache  = file_get_contents( $this->cache_file );
+#    $current_cache .= $file_path . "\r\n";
+#    file_put_contents( $this->cache_file, $current_cache );
+  }
   
 }
 ?>
