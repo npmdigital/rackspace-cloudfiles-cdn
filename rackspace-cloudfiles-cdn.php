@@ -25,7 +25,9 @@ define('CFCDN_PATH', ABSPATH.PLUGINDIR.'/rackspace-cloudfiles-cdn/');
 define('CFCDN_URL', WP_PLUGIN_URL.'/rackspace-cloudfiles-cdn/');
 define('CFCDN_ROUTE', get_bloginfo('url').'/?cfcdn_routing=');
 define('CFCDN_UPLOAD_CURL', CFCDN_ROUTE . "upload_ping" );
+define('CFCDN_NEEDING_UPLOAD_JSON', CFCDN_ROUTE . "needing_upload.json" );
 define('CFCDN_OPTIONS', "wp_cfcdn_settings" );
+define('CFCDN_LOADIND_URL', WP_PLUGIN_URL.'/rackspace-cloudfiles-cdn/assets/images/loading.gif');
 require_once(ABSPATH.'wp-admin/includes/upgrade.php');
 require_once("lib/db_setup.php");
 require_once("lib/functions.php");
@@ -84,6 +86,38 @@ function cfcdn_parse_upload_ping($wp) {
     die();exit();
   }
 }add_action('parse_request', 'cfcdn_parse_upload_ping');
+
+
+/**
+ * List of files that need to be uploaded, GET "/?cfcdn_routing=needing_upload.json".
+ */
+function cfcdn_parse_needing_upload_json($wp) {
+  if (array_key_exists('cfcdn_routing', $wp->query_vars) && $wp->query_vars['cfcdn_routing'] == 'needing_upload.json') {
+    $attachments = new CFCDN_Attachments();
+    echo $attachments->needing_upload_as_json();
+    die();exit();
+  }
+}add_action('parse_request', 'cfcdn_parse_needing_upload_json');
+
+
+/**
+ * Uploads individual file to Cloudfiles CDN on GET request to "/?cfcdn_routing=upload_file&path={PATH_TO_FILE}".
+ */
+function cfcdn_parse_upload_file($wp) {
+  if (array_key_exists('cfcdn_routing', $wp->query_vars) && $wp->query_vars['cfcdn_routing'] == 'upload_file') {
+    $file_path = $_GET['path'];
+    if( !empty( $file_path ) ){
+      $cdn = new CFCDN_CDN();
+      #$cdn->upload_file( $file_path );
+      echo "Uploading $file_path";
+    }
+    die();exit();
+  }
+}add_action('parse_request', 'cfcdn_parse_upload_file');
+
+
+
+
 
 
 

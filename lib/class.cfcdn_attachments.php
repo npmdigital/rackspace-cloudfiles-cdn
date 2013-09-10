@@ -25,21 +25,25 @@ class CFCDN_Attachments{
 
 
  /**
-  * Finds local attachment files and uploads them to CDN.
+  * Finds local attachment files and uploads them to CDN. Will not upload all until
+  * after first manual upload to CDN.
   * Requires PHP Directory Iterator installed on server.
   * Included in Standard PHP Library (SPL) - http://php.net/manual/en/book.spl.php
   *
   * @see http://de.php.net/manual/en/directoryiterator.construct.php
   */
   public function upload_all(){
-    $cdn = new CFCDN_CDN();
-    $this->load_files_needing_upload();
 
-    foreach( $this->files_needing_upload as $file_path ){
-      $cdn->upload_file( $file_path );
-      #echo "Uploaded: $file_path\n";
+    $cdn = new CFCDN_CDN();
+
+    if( $cdn->api_settings['first_upload'] == "false" ){
+      $this->load_files_needing_upload();
+
+      foreach( $this->files_needing_upload as $file_path ){
+        $cdn->upload_file( $file_path );
+      }
     }
-    #echo "All files uploaded.";
+    
   }
 
 
@@ -83,5 +87,13 @@ class CFCDN_Attachments{
   }
 
   
+ /**
+  *  File paths needing upload as JSON.
+  */
+  public function needing_upload_as_json(){
+    $this->files_needing_upload = array_diff( $this->local_files, $this->uploaded_files );
+    return json_encode( $this->files_needing_upload );
+  }
+
 }
 ?>
