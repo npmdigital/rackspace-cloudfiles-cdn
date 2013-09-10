@@ -1,4 +1,5 @@
 === Rackspace CloudFiles CDN ===
+Contributors: richardroyal
 Donate link: http://labs.saidigital.co
 Tags: cdn, rackspace
 Requires at least: 3.0.1
@@ -41,6 +42,11 @@ No. Those things typically belong in revision control and you should have your d
 2. Example output in content
 
 == Changelog ==
+
+= 0.0.1 =
+* Originating Version.
+
+== Upgrade Notice ==
 
 = 0.0.1 =
 * Originating Version.
