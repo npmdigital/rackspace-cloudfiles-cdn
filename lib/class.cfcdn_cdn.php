@@ -65,13 +65,13 @@ class CFCDN_CDN{
   */
   public function upload_file( $file_path ){
     
-    $relative_file_path = str_replace( $this->uploads['basedir'], '',  $file_path );
+    $relative_file_path = str_replace( $this->uploads['basedir'] . "/", '',  $file_path );
     $container = $this->container_object();
     $file = $container->DataObject();
     $file->SetData( file_get_contents( $file_path ) );
     $file->name = $relative_file_path;
-#    $file->content_type = 'image/jpeg';
     $file->Create();
+
   }
 
 

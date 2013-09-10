@@ -19,7 +19,10 @@ function cfcdn_reqrite_on_fly( $content ){
   $uploads = wp_upload_dir();
   $uploads_url = str_replace( array('http://', 'https://'), '', $uploads['baseurl'] );
 
-  return str_replace( $uploads_url, "cnd.asdf", $content );
+  $cdn_settings = CFCDN_CDN::settings();
+  $public_url = str_replace( array('http://', 'https://'), '', $cdn_settings['public_url'] );
+
+  return str_replace( $uploads_url, $public_url, $content );
 
 }add_filter( "the_content", "cfcdn_reqrite_on_fly" );
 
