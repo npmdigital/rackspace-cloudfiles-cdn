@@ -36,11 +36,13 @@ class CFCDN_Attachments{
     $this->load_files_needing_upload();
     var_dump( $this->files_needing_upload );
 
+  /*
     foreach( $this->files_needing_upload as $file_path ){
       $cdn->upload_file( $file_path );
       echo "Uploaded: $file_path\n";
     }
     echo "All files uploaded.";
+    */
   }
 
 
@@ -54,12 +56,12 @@ class CFCDN_Attachments{
     $files = new RecursiveIteratorIterator( new RecursiveDirectoryIterator($path) );
     $local_files = array();
     foreach( $files as $name => $file_info ){
-      if( substr($name, -1) != "." && substr($name, -1) != ".." ){
+      if( substr($name, -1) != "." && substr($name, -1) != ".." && $name != $this->cache_file ){
         $local_files[] = $name;
       }
     }
 
-    $this->local_files = array_diff( $local_files, array(".", "..", $this->cache_file) );
+    $this->local_files = $local_files;
   }
 
 
@@ -74,11 +76,16 @@ class CFCDN_Attachments{
 
   }
 
+
  /**
   * Calculate files that need to be uploaded. Not done on class init.
   * Sticks into array $this->files_needing_upload;
   */
   public function load_files_needing_upload(){
+    var_dump( $this->local_files );
+    echo "<br /><hr />";
+    var_dump( $this->uploaded_files );
+    echo "<br /><hr />";
     $this->files_needing_upload = array_diff( $this->local_files, $this->uploaded_files );
   }
 
