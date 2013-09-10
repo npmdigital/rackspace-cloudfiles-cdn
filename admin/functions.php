@@ -10,4 +10,15 @@ function cfcdn_admin_pages() {
   }
 }add_action('admin_menu', 'cfcdn_admin_pages');
 
+
+/**
+ * Save CloudFiles CDN Settings
+ */
+function cfcdn_save_settings(){
+  if( is_admin() && current_user_can('manage_options') && !empty($_POST) && !empty($_POST['cfcdn']) ){
+    $settings = $_POST['cfcdn'];
+    update_option( CFCDN_OPTIONS, $settings );
+  }
+}
+
 ?>

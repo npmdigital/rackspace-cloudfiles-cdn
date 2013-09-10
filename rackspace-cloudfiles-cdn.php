@@ -30,6 +30,8 @@ require_once(ABSPATH.'wp-admin/includes/upgrade.php');
 require_once("lib/db_setup.php");
 require_once("lib/functions.php");
 require_once("admin/functions.php");
+require_once("lib/class.cfcdn_cdn.php");
+require_once("lib/class.cfcdn_attachments.php");
 require_once("lib/php-opencloud-1.5.10/lib/php-opencloud.php");
 
 

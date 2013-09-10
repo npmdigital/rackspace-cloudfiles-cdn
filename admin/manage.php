@@ -1,6 +1,7 @@
 <?php defined('CFCDN_PATH') or die(); ?>
+<?php $cfcdn = new CFCDN_CDN();?>
 <?php cfcdn_save_settings(); ?>
-<?php $settings = cfcdn_settings(); error_log( var_export($settings, true) )?>
+<?php $settings = $cfcdn->settings(); ?>
 
 <div class="wrap cfcdn">
 
@@ -91,9 +92,9 @@
 
 
         <tr valign="top">
-          <th scope="row"><label for="cfcdn[api_key]">API Key</label></th>
+          <th scope="row"><label for="cfcdn[apiKey]">API Key</label></th>
           <td>
-            <input name="cfcdn[api_key]" type="text" value="<?php echo $settings['api_key'];?>" class="regular-text" required="required" />
+            <input name="cfcdn[apiKey]" type="text" value="<?php echo $settings['apiKey'];?>" class="regular-text" required="required" />
           </td>
         </tr>
 
@@ -101,6 +102,37 @@
           <th scope="row"><label for="cfcdn[container]">Container</label></th>
           <td>
             <input name="cfcdn[container]" type="text" value="<?php echo $settings['container'];?>" class="regular-text" required="required" />
+          </td>
+        </tr>
+
+
+        <tr valign="top">
+          <th scope="row"><label for="cfcdn[url]">URL</label></th>
+          <td>
+            <input name="cfcdn[url]" type="text" value="<?php echo $settings['url'];?>" class="regular-text" required="required" readonly="readonly" />
+          </td>
+        </tr>
+
+
+        <tr valign="top">
+          <th scope="row"><label for="cfcdn[serviceName]">Service Name</label></th>
+          <td>
+            <input name="cfcdn[serviceName]" type="text" value="<?php echo $settings['serviceName'];?>" class="regular-text" required="required" readonly="readonly" />
+          </td>
+        </tr>
+
+
+        <tr valign="top">
+          <th scope="row"><label for="cfcdn[region]">Region</label></th>
+          <td>
+            <input name="cfcdn[region]" type="text" value="<?php echo $settings['region'];?>" class="regular-text" required="required" readonly="readonly" />
+          </td>
+        </tr>
+
+        <tr valign="top">
+          <th scope="row"><label for="cfcdn[urltype]">URL Type</label></th>
+          <td>
+            <input name="cfcdn[urltype]" type="text" value="<?php echo $settings['urltype'];?>" class="regular-text" required="required" readonly="readonly" />
           </td>
         </tr>
 
