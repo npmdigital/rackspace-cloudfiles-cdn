@@ -36,7 +36,9 @@ require_once("admin/functions.php");
 require_once("lib/class.cfcdn_cdn.php");
 require_once("lib/class.cfcdn_attachments.php");
 require_once("lib/class.cfcdn_util.php");
-require_once("lib/php-opencloud-1.5.10/lib/php-opencloud.php");
+if( !class_exists("OpenCloud") ){
+  require_once("lib/php-opencloud-1.5.10/lib/php-opencloud.php");
+}
 
 
 
