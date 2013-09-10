@@ -83,10 +83,13 @@ class CFCDN_CDN{
   
     if( !file_exists( $this->cache_file ) ){
       mkdir( $this->cache_folder, 0777, true );
+      $fp = fopen( $this->cache_file, 'ab' ) or die('Cannot open file:  ' . $this->cache_file );
+      fclose( $fp );
     }
 
-    $fp = fopen( $this->cache_file, 'r' ) or die('Cannot open file:  ' . $this->cache_file );
-    $files = array_diff( file( $this->cache_file ), array(".", "..", $this->cache_file) );
+    $fp = fopen( $this->cache_file, 'rb' ) or die('Cannot open file:  ' . $this->cache_file );
+    $lines = array_map( "rtrim", file( $this->cache_file ) );
+    $files = array_diff( $lines, array(".", "..", $this->cache_file) );
     fclose( $fp );
 
     return $files;
@@ -98,13 +101,10 @@ class CFCDN_CDN{
   */
   public function write_to_cache( $file_path ){
 
-    $fp = fopen( $this->cache_file, 'a' ) or die('Cannot open file:  ' . $this->cache_file );
+    $fp = fopen( $this->cache_file, 'ab' ) or die('Cannot open file:  ' . $this->cache_file );
     fwrite( $fp, $file_path . "\n" );
     fclose( $fp );
 
-#    $current_cache  = file_get_contents( $this->cache_file );
-#    $current_cache .= $file_path . "\r\n";
-#    file_put_contents( $this->cache_file, $current_cache );
   }
   
 }

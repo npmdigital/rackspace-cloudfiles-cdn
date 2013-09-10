@@ -49,4 +49,5 @@ function cfcdn_send_to_cdn_on_attachment_post_save( $post_id ){
   cfcdn_upload_all();
 }add_action( 'add_attachment', 'cfcdn_send_to_cdn_on_attachment_post_save' );
 
+
 ?>
