@@ -105,6 +105,14 @@
           </td>
         </tr>
 
+        <tr valign="top">
+          <th scope="row"><label for="cfcdn[public_url]">Public URL to Container</label></th>
+          <td>
+            <input name="cfcdn[public_url]" type="text" value="<?php echo $settings['public_url'];?>" class="regular-text" required="required" />
+            <span class="description">No trailing slash.</span>
+          </td>
+        </tr>
+
 
         <tr valign="top">
           <th scope="row"><label for="cfcdn[url]">URL</label></th>

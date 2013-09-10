@@ -23,6 +23,7 @@ class CFCDN_CDN{
     $default_settings = array( 'username' => 'YOUR USERNAME',
                                'apiKey' => 'YOUR API KEY',
                                'container' => 'YOUR CONTAINER',
+                               'public_url' => 'http://YOUR LONG URL.rackcdn.com',
                                'url' => 'https://identity.api.rackspacecloud.com/v2.0/',
                                'serviceName' => 'cloudFiles',
                                'region' => 'DFW',
@@ -64,10 +65,11 @@ class CFCDN_CDN{
   */
   public function upload_file( $file_path ){
     
+    $relative_file_path = str_replace( $this->uploads['basedir'], '',  $file_path );
     $container = $this->container_object();
     $file = $container->DataObject();
     $file->SetData( file_get_contents( $file_path ) );
-    $file->name = basename($file_path);
+    $file->name = $relative_file_path;
 #    $file->content_type = 'image/jpeg';
     $file->Create();
   }
@@ -87,19 +89,6 @@ class CFCDN_CDN{
     fclose( $fp );
 
     return $files;
-  }
-
-
-
-
-  public function test(){
-    $container = $this->container_object();
-    $att = $container->DataObject();
-    $att->SetData( file_get_contents("/home/rroyal/Desktop/pickle.gif") );
-    $att->name = 'pickle.gif';
-    $att->content_type = 'image/jpeg';
-    $att->Create();
-
   }
 
   
