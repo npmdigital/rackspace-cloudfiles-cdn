@@ -10,9 +10,11 @@ class CFCDN_Attachments{
   * Finds local attachment files and uploads them to CDN.
   */
   public function upload_all(){
-    $attachments = get_local_attachments();
+
+    $cdn = new CFCDN_CDN();
+    $attachments = $this->get_local_attachments();
     foreach( $attachments as $attachment ){
-      $this->upload_attachment($attachment, $api_settings );
+      $this->upload_attachment($attachment, $cdn );
     }
   }
 
@@ -20,7 +22,8 @@ class CFCDN_Attachments{
  /**
   * Upload attachment to Cloudfiles.
   */
-  public function upload_attachment( $attachment, $api_settings ){
+  public function upload_attachment( $attachment, $cdn ){
+    $cdn->upload_file( $attachment );
 
   } 
 

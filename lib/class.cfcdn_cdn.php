@@ -3,6 +3,12 @@
  * Connection layer to CDN.
  */
 class CFCDN_CDN{
+
+  public $api_settings;
+
+  function __construct() {
+    $this->api_settings = $this->settings();
+  }
   
  /**
   * CloudFiles CDN Settings.
@@ -21,23 +27,61 @@ class CFCDN_CDN{
   
   
  /**
-  *  Openstack Connection Object
+  *  Openstack Connection Object.
   */
   function connection_object(){
   
-    $api_settings = $this->settings();
-    $connection = new OpenCloudRackspace(
+    $api_settings = $this->$api_settings;
+    $connection = new \OpenCloud\Rackspace(
                             $api_settings['url'],
                             array(  'username' => $api_settings['username'],
                                     'apiKey' => $api_settings['apiKey']  ) );
   
     $cdn = $connection->ObjectStore( $api_settings['serviceName'], $api_settings['region'], $api_settings['urltype'] );
-    error_log( var_export( $cdn, true ) );
-    $cdn->Container()->Create(array('name' => 'test_1'));
+    return $cdn;
   }
   
   
+ /**
+  *  Openstack CDN Container Object.
+  */
+  public function container_object(){
+    $api_settings = $this->$api_settings;
+    $cdn = $this->connection_object();
+    $container = $cdn->Container($api_settings['container']);
+    return $container;
+  }
   
+
+ /**
+  * Puts given file attachment onto CDN.
+  */
+  public function upload_file( $attachment ){
+    $path = get_attached_file( $attachment->ID );
+    $meta = wp_get_attachment_metadata();
+    error_log( var_export($path, true) );  
+    
+    $container = $this->container_object();
+    $file = $container->DataObject();
+    $file->SetData( file_get_contents( $path ) );
+    $file->name = 'pickle.gif';
+    $file->content_type = 'image/jpeg';
+    $file->Create();
+    
+  }
+
+
+
+  public function test(){
+    $container = $this->container_object();
+    $att = $container->DataObject();
+    $att->SetData( file_get_contents("/home/rroyal/Desktop/pickle.gif") );
+    $att->name = 'pickle.gif';
+    $att->content_type = 'image/jpeg';
+    $att->Create();
+
+  }
+
   
 }
 ?>
