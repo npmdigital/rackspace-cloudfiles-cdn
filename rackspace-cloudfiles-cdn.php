@@ -24,10 +24,12 @@ global $wpdb;
 define('CFCDN_PATH', ABSPATH.PLUGINDIR.'/rackspace-cloudfiles-cdn/');
 define('CFCDN_URL', WP_PLUGIN_URL.'/rackspace-cloudfiles-cdn/');
 define('CFCDN_ROUTE', get_bloginfo('url').'/?cfcdn_routing=');
+define('CFCDN_UPLOAD_CURL', CFCDN_ROUTE . "upload_ping" );
 require_once(ABSPATH.'wp-admin/includes/upgrade.php');
 require_once("lib/db_setup.php");
 require_once("lib/functions.php");
 require_once("admin/functions.php");
+require_once("lib/php-opencloud-1.5.10/lib/php-opencloud.php");
 
 
 
@@ -74,7 +76,7 @@ function cfcdn_admin_js() {
  */
 function cfcdn_parse_upload_ping($wp) {
   if (array_key_exists('cfcdn_routing', $wp->query_vars) && $wp->query_vars['cfcdn_routing'] == 'upload_ping') {
-    echo "test";
+    cfcdn_upload_all();
     die();exit();
   }
 }add_action('parse_request', 'cfcdn_parse_upload_ping');
@@ -82,8 +84,8 @@ function cfcdn_parse_upload_ping($wp) {
 
 
 function cfcdn_parse_query_vars($vars) {
-    $vars[] = 'cfcdn_routing';
-    return $vars;
+  $vars[] = 'cfcdn_routing';
+  return $vars;
 }add_filter('query_vars', 'cfcdn_parse_query_vars');
 
 ?>
