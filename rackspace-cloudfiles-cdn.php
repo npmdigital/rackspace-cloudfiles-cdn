@@ -66,4 +66,24 @@ function cfcdn_admin_js() {
 }add_action('admin_enqueue_scripts', 'cfcdn_admin_js');
 
 
+
+
+
+/**
+ * Uploads files to Cloudfiles CDN on GET request to "/?cfcdn_routing=upload_ping".
+ */
+function cfcdn_parse_upload_ping($wp) {
+  if (array_key_exists('cfcdn_routing', $wp->query_vars) && $wp->query_vars['cfcdn_routing'] == 'upload_ping') {
+    echo "test";
+    die();exit();
+  }
+}add_action('parse_request', 'cfcdn_parse_upload_ping');
+
+
+
+function cfcdn_parse_query_vars($vars) {
+    $vars[] = 'cfcdn_routing';
+    return $vars;
+}add_filter('query_vars', 'cfcdn_parse_query_vars');
+
 ?>
