@@ -59,7 +59,6 @@ class CFCDN_CDN{
   public function upload_file( $attachment ){
     $path = get_attached_file( $attachment->ID );
     $meta = wp_get_attachment_metadata();
-    error_log( var_export($path, true) );  
     
     $container = $this->container_object();
     $file = $container->DataObject();

@@ -5,17 +5,26 @@
  */
 class CFCDN_Attachments{
 
+  public $uploads;
+
+
+  function __construct() {
+    $this->uploads = wp_upload_dir();
+  }
+
+
+
 
  /**
   * Finds local attachment files and uploads them to CDN.
   */
   public function upload_all(){
-
     $cdn = new CFCDN_CDN();
-    $attachments = $this->get_local_attachments();
-    foreach( $attachments as $attachment ){
-      $this->upload_attachment($attachment, $cdn );
-    }
+    $attachments = scandir( $this->uploads['basedir'] );
+    error_log( var_export($attachments, true) );
+#    foreach( $attachments as $attachment ){
+#      $this->upload_attachment($attachment, $cdn );
+#    }
   }
 
 
