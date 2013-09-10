@@ -37,9 +37,9 @@ class CFCDN_Attachments{
 
     foreach( $this->files_needing_upload as $file_path ){
       $cdn->upload_file( $file_path );
-      echo "Uploaded: $file_path\n";
+      #echo "Uploaded: $file_path\n";
     }
-    echo "All files uploaded.";
+    #echo "All files uploaded.";
   }
 
 
