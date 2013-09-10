@@ -84,7 +84,7 @@ class CFCDN_CDN{
     }
 
     $fp = fopen( $cache_file, 'w' ) or die('Cannot open file:  ' . $cache_file );
-    $files = str_getcsv( $cache_file );
+    $files = array_diff( str_getcsv( $cache_file ), array(".", "..", $cache_file) );
     fclose( $fp );
 
     return $files;
