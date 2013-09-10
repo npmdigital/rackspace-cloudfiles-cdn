@@ -64,10 +64,6 @@ class CFCDN_CDN{
   */
   public function upload_file( $file_path ){
     
-#    $finfo = new finfo( FILEINFO_MIME, $file_path );
-#    var_dump( $finfo );
-
-
     $container = $this->container_object();
     $file = $container->DataObject();
     $file->SetData( file_get_contents( $file_path ) );
