@@ -10,6 +10,7 @@ class CFCDN_Attachments{
 
   function __construct() {
     $this->uploads = wp_upload_dir();
+    $this->load_cache();
   }
 
 
@@ -17,14 +18,24 @@ class CFCDN_Attachments{
 
  /**
   * Finds local attachment files and uploads them to CDN.
+  * Requires PHP Directory Iterator installed on server.
+  * Included in Standard PHP Library (SPL) - http://php.net/manual/en/book.spl.php
+  *
+  * @see http://de.php.net/manual/en/directoryiterator.construct.php
   */
   public function upload_all(){
     $cdn = new CFCDN_CDN();
-    $attachments = scandir( $this->uploads['basedir'] );
-    error_log( var_export($attachments, true) );
-#    foreach( $attachments as $attachment ){
-#      $this->upload_attachment($attachment, $cdn );
-#    }
+
+    $path = $this->uploads['basedir'];
+
+    $files = new RecursiveIteratorIterator( new RecursiveDirectoryIterator($path) );
+    foreach( $files as $name => $file_info ){
+      if ( substr( $name, -1 ) != "." && substr( $name, -2 ) != ".." ){
+  #      echo "$name<br />";
+        
+      }
+    }
+
   }
 
 
@@ -48,7 +59,21 @@ class CFCDN_Attachments{
   }
 
 
+ /**
+  * Load lists of files already uploaded to CDN.
+  * Uses a persistance file in uploads folder
+  */
+  public function load_cache(){
+    $cache_file = $this->uploads['basedir'] . "/cdn/tmp/cache.txt";
+    if( !file_exists( $cache_file ) ){
+      $fp = fopen( $cache_file, 'w' ) or die('Cannot open file:  ' . $cache_file );
+    }
+
+    
+
+    fclose( $fp );
+  }
+
   
 }
-
 ?>
