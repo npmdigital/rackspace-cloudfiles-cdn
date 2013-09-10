@@ -101,11 +101,23 @@ class CFCDN_CDN{
   * Write file path the cache file once file is uploaded to CDN.
   */
   public function write_to_cache( $file_path ){
-
     $fp = fopen( $this->cache_file, 'ab' ) or die('Cannot open file:  ' . $this->cache_file );
     fwrite( $fp, $file_path . "\n" );
     fclose( $fp );
+  }
+  
 
+ /**
+  * Change setting via key value pair.
+  */
+  public function update_setting( $setting, $value ){
+    if( current_user_can('manage_options') && !empty($setting) ){
+      $api_settings = $this->api_settings;
+      $api_settings[$setting] = $value;
+      update_option( CFCDN_OPTIONS, $api_settings );
+      $this->api_settings = $api_settings;
+    }
+    
   }
   
 }

@@ -26,11 +26,13 @@
         <td>
           <p>
             <a href="#" class="button" id="cfcdn_manual_upload" data-blogurl="<?php echo site_url();?>">Upload Now</a>
-            <span id="cfcdn_info" class="description" style="display:none"></span>
             <br />
-            <span class="description">Click this button to uploads attachments to CDN for the first time.</span>
+            <span class="description">Click this button to manually upload attachments to CDN.</span>
+            <br />
+            <span id="cfcdn_info" class="description" style="display:none">
+              <img class="cfcdn_loading" style="display:none" src="<?php echo CFCDN_LOADIND_URL;?>" />
+            </span>
           </p>
-          <div id="manually_uploaded_file"></div>
         </td>
       </tr>
         

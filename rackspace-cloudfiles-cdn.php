@@ -106,11 +106,12 @@ function cfcdn_parse_needing_upload_json($wp) {
 function cfcdn_parse_upload_file($wp) {
   if (array_key_exists('cfcdn_routing', $wp->query_vars) && $wp->query_vars['cfcdn_routing'] == 'upload_file') {
     $file_path = $_GET['path'];
+    $cdn = new CFCDN_CDN();
     if( !empty( $file_path ) ){
-      $cdn = new CFCDN_CDN();
-      #$cdn->upload_file( $file_path );
+      $cdn->upload_file( $file_path );
       echo "Uploading $file_path";
     }
+    $cdn->update_setting( "first_upload", "true" );
     die();exit();
   }
 }add_action('parse_request', 'cfcdn_parse_upload_file');

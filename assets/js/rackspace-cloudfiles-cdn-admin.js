@@ -10,11 +10,19 @@ jQuery(document).ready(function($) {
     ajax_url =  blog_url + "/?cfcdn_routing=needing_upload.json";
 
     $.get( ajax_url, function( data ){
+       
+      $("#cfcdn_info").show();
       files = $.parseJSON( data );
+      $("#cfcdn_info").html("<p>Found " + Object.keys(files).length.toString() + " files needing upload.");
+
       $.each( files, function(key, file_path){
 
+        console.log('uploading');
+         
+        $("#cfcdn_info img").show();
         $.get( single_url + file_path, function( file_data ){
-          $("div#manually_uploaded_files").append( "<p>" + file_data + "</p>" );
+          $("#cfcdn_info").append( "<p>" + file_data + "</p>" );
+          $("#cfcdn_info img").hide();
         });
 
       });
