@@ -1,6 +1,6 @@
 === Rackspace CloudFiles CDN ===
 Contributors: richardroyal
-Donate link: http://labs.saidigital.co
+Donate link: http://www.sailabs.co
 Tags: cdn, rackspace
 Requires at least: 3.0.1
 Tested up to: 3.4
@@ -16,7 +16,7 @@ Moves files uploaded through Media Manager to Cloudfiles automatically, and rewr
 
 = Beta Version 0.0.1 =
 
-Still working to get URL rewriting in all cases so you may not want to setup the delete local files cron job yet. This plugin should function as-is when creating a new client project and configuring the CDN prior to adding content.
+Still working to get URL rewriting in all cases so you may not want to setup the delete local files cron job yet. This plugin should function as-is when creating a new client project and configuring the CDN prior to adding content. Contact me via Twitter @richardroyal for code suggestions and merge requests.
 
 == Installation ==
 
