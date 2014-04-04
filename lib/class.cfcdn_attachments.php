@@ -34,7 +34,7 @@ class CFCDN_Attachments{
 
     $cdn = new CFCDN_CDN();
 
-    if( $cdn->api_settings['first_upload'] == "true" ){
+    if( !empty($cdn->api_settings['first_upload']) && $cdn->api_settings['first_upload'] == "true" ){
       $this->load_files_needing_upload();
 
       foreach( $this->files_needing_upload as $file_path ){

@@ -14,7 +14,9 @@ A plugin that moves attachments to Rackspace Cloudfiles CDN.
 
 Moves files uploaded through Media Manager to Cloudfiles automatically, and rewrites URL in content. Optionally delete local files after CDN upload.
 
-= Beta Version 0.0.1 =
+[Plugin Demo Site](http://product-demos.rackspace-cloudfiles-cdn.sailabs.co/)
+
+= Beta Version 0.0.3 =
 
 Still working to get URL rewriting in all cases so you may not want to setup the delete local files cron job yet. This plugin should function as-is when creating a new client project and configuring the CDN prior to adding content. Contact me via Twitter @richardroyal for code suggestions and merge requests.
 
