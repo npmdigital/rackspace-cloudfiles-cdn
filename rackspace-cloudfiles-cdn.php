@@ -3,7 +3,7 @@
 Plugin Name: Rackspace CloudFile CDN
 Plugin URI: http://labs.saidigital.co/products/rackspace-cloudfiles-cdn
 Description: A plugin that moves attachments to Rackspace Cloudfiles.
-Version: 0.0.1
+Version: 0.0.2
 Author: richardroyal
 Author URI: http://saidigital.co/about-us/people/richard-royal/
 License: GPLv2
