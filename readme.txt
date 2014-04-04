@@ -20,7 +20,12 @@ Still working to get URL rewriting in all cases so you may not want to setup the
 
 == Installation ==
 
-1. Upload the plugin folder to the `/wp-content/plugins/` directory 2. Activate the plugin through the 'Plugins' menu in WordPress
+1. Upload the plugin folder to the `/wp-content/plugins/` directory 
+2. Activate the plugin through the 'Plugins' menu in WordPress
+3. Click on the CloudFiles CDN link on the admin and enter your API settings and container name.
+4. Create the container from your CloudFiles account and make it a Public CDN.
+5. On the admin, click the "Upload Now" button.
+6. Try adding an image from the media uploader or from within a post. File uploading will be slower due to moving the files to the CDN on the fly.
 
 == Frequently Asked Questions ==
 
@@ -46,6 +51,10 @@ No. Those things typically belong in revision control and you should have your d
 2. Example output in content
 
 == Changelog ==
+
+= 0.0.2 =
+* Combed through plugin with PHP strict standards to increase compatibility.
+* Added configuration instructions.
 
 = 0.0.1 =
 * Originating Version.

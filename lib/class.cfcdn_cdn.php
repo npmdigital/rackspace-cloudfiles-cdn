@@ -19,7 +19,7 @@ class CFCDN_CDN{
  /**
   * CloudFiles CDN Settings.
   */
-  public function settings(){
+  public static function settings(){
     $default_settings = array( 'username' => 'YOUR USERNAME',
                                'apiKey' => 'YOUR API KEY',
                                'container' => 'YOUR CONTAINER',

@@ -8,7 +8,7 @@ class CFCDN_Util{
  /**
   * Finds and uploads all attachments to Rackspace CDN if not already there.
   */
-  public function upload_all(){
+  public static function upload_all(){
     $attachments = new CFCDN_Attachments();
     $attachments->upload_all();
   }
@@ -17,7 +17,7 @@ class CFCDN_Util{
  /**
   * Deltes all local files that are uploaded to CDN. 
   */
-  public function delete_local_files(){
+  public static function delete_local_files(){
     $attachments = new CFCDN_Attachments();
     $attachments->delete_local_files();
   }

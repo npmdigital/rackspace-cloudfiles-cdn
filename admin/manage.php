@@ -13,7 +13,7 @@
 
     <h3>Moving Files To CDN</h3>
   
-    <?php if($settings["first_upload"] !== "true"): ?>
+    <?php if( !empty($settings) || empty($settings["first_upload"]) || $settings["first_upload"] !== "true"): ?>
       <div id="setting-error-settings_updated" class="updated settings-error"> 
         <p><strong>Waiting on first upload</strong><br />You have not run your first upload to the CDN. Click the manual upload button to move your existing files to the CDN and finish plugin activation.</p>
       </div>
