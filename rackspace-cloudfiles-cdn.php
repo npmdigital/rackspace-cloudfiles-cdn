@@ -1,7 +1,7 @@
 <?php
 /*
-Plugin Name: Rackspace CloudFile CDN
-Plugin URI: http://labs.saidigital.co/products/rackspace-cloudfiles-cdn
+Plugin Name: Rackspace Cloudfiles CDN
+Plugin URI: http://product-demos.rackspace-cloudfiles-cdn.sailabs.co/
 Description: A plugin that moves attachments to Rackspace Cloudfiles.
 Version: 0.0.3
 Author: richardroyal

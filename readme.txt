@@ -1,7 +1,7 @@
 === Rackspace CloudFiles CDN ===
 Contributors: richardroyal
-Donate link: http://www.sailabs.co
-Tags: cdn, rackspace
+Donate link: http://www.sailabs.co/
+Tags: rackspace, cloudfiles, cdn
 Requires at least: 3.0.1
 Tested up to: 3.4
 Stable tag: 4.3
