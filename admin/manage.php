@@ -33,7 +33,7 @@
               <span class="description">Click this button to manually upload attachments to CDN.</span>
               <br />
               <span id="cfcdn_info" class="description" style="display:none">
-                <img class="cfcdn_loading" style="display:none" src="<?php echo CFCDN_LOADIND_URL;?>" />
+                <img class="cfcdn_loading" style="display:none" src="<?php echo CFCDN_LOADING_URL;?>" />
               </span>
             </p>
           </td>
