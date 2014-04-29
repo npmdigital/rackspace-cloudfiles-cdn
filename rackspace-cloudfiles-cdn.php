@@ -22,13 +22,13 @@ defined('WP_PLUGIN_URL') or die('Restricted access');
 
 global $wpdb;
 define('CFCDN_PATH', plugin_dir_path(__FILE__));
-define('CFCDN_URL', plugins_url('' , dirname(__FILE__)));
+define('CFCDN_URL', plugins_url('/' , __FILE__));
 define('CFCDN_ROUTE', get_bloginfo('url').'/?cfcdn_routing=');
 define('CFCDN_UPLOAD_CURL', CFCDN_ROUTE . "upload_ping" );
 define('CFCDN_DELETE_CURL', CFCDN_ROUTE . "delete_ping" );
 define('CFCDN_NEEDING_UPLOAD_JSON', CFCDN_ROUTE . "needing_upload.json" );
 define('CFCDN_OPTIONS', "wp_cfcdn_settings" );
-define('CFCDN_LOADING_URL', plugins_url('/assets/images/loading.gif' , dirname(__FILE__)));
+define('CFCDN_LOADING_URL', plugins_url('/assets/images/loading.gif' , __FILE__));
 require_once(ABSPATH.'wp-admin/includes/upgrade.php');
 require_once("lib/db_setup.php");
 require_once("lib/functions.php");
@@ -39,9 +39,6 @@ require_once("lib/class.cfcdn_util.php");
 if( !class_exists("OpenCloud") ){
   require_once("lib/php-opencloud-1.5.10/lib/php-opencloud.php");
 }
-
-
-
 
 /**
  *  Register and enqueue frontend CSS
