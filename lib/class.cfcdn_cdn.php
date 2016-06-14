@@ -1,4 +1,7 @@
 <?php
+
+use \OpenCloud\Rackspace;
+
 /**
  * Connection layer to CDN.
  */
@@ -6,16 +9,14 @@ class CFCDN_CDN{
 
   public $api_settings;
   public $uploads;
-  public $cache_file;
-  public $cache_folder;
+  public $cache_option_name;
 
   function __construct() {
     $this->api_settings = $this->settings();
     $this->uploads = wp_upload_dir();
-    $this->cache_folder = $this->uploads['basedir'] . "/cdn/tmp/";
-    $this->cache_file = $this->cache_folder . "cache.csv";
+    $this->cache_option_name = 'cfcdn_cache';
   }
-  
+
  /**
   * CloudFiles CDN Settings.
   */
@@ -24,55 +25,55 @@ class CFCDN_CDN{
                                'apiKey' => 'YOUR API KEY',
                                'container' => 'YOUR CONTAINER',
                                'public_url' => 'http://YOUR LONG URL.rackcdn.com',
-                               'region' => 'DFW',
+                               'region' => 'IAD',
                                'url' => 'https://identity.api.rackspacecloud.com/v2.0/',
                                'serviceName' => 'cloudFiles',
                                'urltype' => 'publicURL',
                                'first_upload' => 'false',
                                'delete_local_files' => 'true' );
-  
+
     return get_option( CFCDN_OPTIONS, $default_settings );
   }
-  
-  
+
+
  /**
   *  Openstack Connection Object.
   */
   function connection_object(){
-  
     $api_settings = $this->api_settings;
-    $connection = new \OpenCloud\Rackspace(
-                            $api_settings['url'],
-                            array(  'username' => $api_settings['username'],
-                                    'apiKey' => $api_settings['apiKey']  ) );
-  
-    $cdn = $connection->ObjectStore( $api_settings['serviceName'], $api_settings['region'], $api_settings['urltype'] );
+    $connection = new Rackspace(
+      $api_settings['url'],
+      [
+          'username' => $api_settings['username'],
+          'apiKey' => $api_settings['apiKey']
+      ]
+    );
+
+    $cdn = $connection->objectStoreService( $api_settings['serviceName'], $api_settings['region'], $api_settings['urltype'] );
+
     return $cdn;
   }
-  
-  
+
+
  /**
   *  Openstack CDN Container Object.
   */
   public function container_object(){
     $api_settings = $this->api_settings;
     $cdn = $this->connection_object();
-    $container = $cdn->Container($api_settings['container']);
+    $container = $cdn->getContainer($api_settings['container']);
+
     return $container;
   }
-  
+
 
  /**
   * Puts given file attachment onto CDN.
   */
   public function upload_file( $file_path ){
-    
     $relative_file_path = str_replace( $this->uploads['basedir'] . "/", '',  $file_path );
     $container = $this->container_object();
-    $file = $container->DataObject();
-    $file->SetData( file_get_contents( $file_path ) );
-    $file->name = $relative_file_path;
-    $file->Create();
+    $container->uploadObject($relative_file_path, file_get_contents( $file_path ));
 
     $this->write_to_cache( $file_path );
   }
@@ -82,17 +83,13 @@ class CFCDN_CDN{
   * List of files uploaded to CDN as recorded in cache file.
   */
   public function get_uploaded_files(){
-  
-    if( !file_exists( $this->cache_file ) ){
-      mkdir( $this->cache_folder, 0777, true );
-      $fp = fopen( $this->cache_file, 'ab' ) or die('Cannot open file:  ' . $this->cache_file );
-      fclose( $fp );
+    if(!get_option($this->cache_option_name)) {
+        add_option($this->cache_option_name, [], null, 'no');
     }
 
-    $fp = fopen( $this->cache_file, 'rb' ) or die('Cannot open file:  ' . $this->cache_file );
-    $lines = array_map( "rtrim", file( $this->cache_file ) );
-    $files = array_diff( $lines, array(".", "..", $this->cache_file) );
-    fclose( $fp );
+    $excludes = [".", "..", $this->cache_file];
+    $cache = get_option($this->cache_option_name);
+    $files = array_diff($cache, $excludes);
 
     return $files;
   }
@@ -102,11 +99,23 @@ class CFCDN_CDN{
   * Write file path the cache file once file is uploaded to CDN.
   */
   public function write_to_cache( $file_path ){
-    $fp = fopen( $this->cache_file, 'ab' ) or die('Cannot open file:  ' . $this->cache_file );
-    fwrite( $fp, $file_path . "\n" );
-    fclose( $fp );
+    $cache = get_option($this->cache_option_name);
+    if(get_option($this->cache_option_name) !== false) {
+        $cache[] = $file_path;
+        update_option($this->cache_option_name, $cache);
+    } else {
+        add_option($this->cache_option_name, [$file_path], null, 'no');
+    }
   }
-  
+
+
+ /**
+  * Purge the cached list of files already uploaded
+  */
+  public function purge_cache(){
+    return update_option($this->cache_option_name, []);
+  }
+
 
  /**
   * Change setting via key value pair.
@@ -118,8 +127,7 @@ class CFCDN_CDN{
       update_option( CFCDN_OPTIONS, $api_settings );
       $this->api_settings = $api_settings;
     }
-    
+
   }
-  
+
 }
-?>

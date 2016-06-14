@@ -1,6 +1,7 @@
-<?php 
+<?php
+
 /**
- * Abstraction layer over WordPress attachments for getting and 
+ * Abstraction layer over WordPress attachments for getting and
  * pushing attachments to and from CDN.
  */
 class CFCDN_Attachments{
@@ -16,7 +17,7 @@ class CFCDN_Attachments{
   function __construct() {
     $this->uploads = wp_upload_dir();
     $this->load_cache();
-    $this->load_local_files();
+    $this->local_files = $this->load_local_files();
   }
 
 
@@ -41,7 +42,7 @@ class CFCDN_Attachments{
         $cdn->upload_file( $file_path );
       }
     }
-    
+
   }
 
 
@@ -53,14 +54,14 @@ class CFCDN_Attachments{
   public function load_local_files(){
     $path = $this->uploads['basedir'];
     $files = new RecursiveIteratorIterator( new RecursiveDirectoryIterator($path) );
-    $local_files = array();
+    $local_files = [];
     foreach( $files as $name => $file_info ){
       if( substr($name, -1) != "." && substr($name, -1) != ".." && $name != $this->cache_file ){
         $local_files[] = $name;
       }
     }
 
-    $this->local_files = $local_files;
+    return $local_files;
   }
 
 
@@ -70,9 +71,7 @@ class CFCDN_Attachments{
   */
   public function load_cache(){
     $cdn = new CFCDN_CDN();
-    $this->cache_file = $cdn->cache_file;
     $this->uploaded_files = $cdn->get_uploaded_files();
-
   }
 
 
@@ -84,7 +83,7 @@ class CFCDN_Attachments{
     $this->files_needing_upload = array_diff( $this->local_files, $this->uploaded_files );
   }
 
-  
+
  /**
   *  File paths needing upload as JSON.
   */
@@ -98,16 +97,15 @@ class CFCDN_Attachments{
   * Delete local copies of files that are already pushed to CDN.
   */
   public function delete_local_files(){
-   
+
     $cdn = new CFCDN_CDN();
     if( $cdn->api_settings['delete_local_files'] == "true" && !empty($this->uploaded_files) ){
       foreach( $this->uploaded_files as $file_path ){
         if( file_exists($file_path) ){
-          unlink( $file_path );  
+          unlink( $file_path );
         }
       }
-    } 
+    }
   }
 
 }
-?>
