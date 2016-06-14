@@ -39,8 +39,9 @@ No. Those things typically belong in revision control and you should have your d
 
 ### Screenshots
 
-1. Beautifully simple management
-2. Example output in content
+![alt text](screenshot-1.png "Beautifully simple management")
+
+![alt text](screenshot-2.png "Example output in content")
 
 ### Changelog
 
