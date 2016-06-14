@@ -1,9 +1,10 @@
+*Forked from [singlow/rackspace-cloudfiles-cdn](https://github.com/singlow/rackspace-cloudfiles-cdn)*
+
 Rackspace CloudFiles CDN
 ----
 
-*Forked from [singlow/rackspace-cloudfiles-cdn](https://github.com/singlow/rackspace-cloudfiles-cdn)*
 
-A plugin that moves attachments to Rackspace Cloudfiles CDN.
+A WordPress plugin that moves attachments to Rackspace Cloudfiles CDN.
 
 ### Description
 
