@@ -3,15 +3,6 @@ Rackspace CloudFiles CDN
 
 *Forked from [singlow/rackspace-cloudfiles-cdn](https://github.com/singlow/rackspace-cloudfiles-cdn)*
 
-Contributors: richardroyal
-Donate link: http://www.sailabs.co/
-Tags: rackspace, cloudfiles, cdn
-Requires at least: 3.0.1
-Tested up to: 3.4
-Stable tag: 4.3
-License: GPLv2
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
-
 A plugin that moves attachments to Rackspace Cloudfiles CDN.
 
 ### Description
