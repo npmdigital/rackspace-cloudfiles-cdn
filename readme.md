@@ -12,12 +12,29 @@ Moves files uploaded through Media Manager to Cloudfiles automatically, and rewr
 
 ### Installation
 
-1. Upload the plugin folder to the `/wp-content/plugins/` directory
-2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Click on the CloudFiles CDN link on the admin and enter your API settings and container name.
-4. Create the container from your CloudFiles account and make it a Public CDN.
-5. On the admin, click the "Upload Now" button.
-6. Try adding an image from the media uploader or from within a post. File uploading will be slower due to moving the files to the CDN on the fly.
+1. Add a `composer.json` file to the root of your WP install. This will set the PHP version 
+```json
+{
+  "require": {
+    "php": "^7.0.0",
+    "rackspace/php-opencloud": "^1.16"
+  },
+  "autoload": {
+    "files": [
+      "wp-content/plugins/rackspace-cloudfiles-cdn/lib/db_setup.php",
+      "wp-content/plugins/rackspace-cloudfiles-cdn/lib/functions.php",
+      "wp-content/plugins/rackspace-cloudfiles-cdn/admin/functions.php"
+    ],
+    "classmap": ["wp-content/plugins/rackspace-cloudfiles-cdn/lib/"]
+  }
+}
+```
+2. Upload the plugin folder to the `/wp-content/plugins/` directory
+3. Activate the plugin through the 'Plugins' menu in WordPress
+4. Click on the CloudFiles CDN link on the admin and enter your API settings and container name.
+5. Create the container from your CloudFiles account and make it a Public CDN.
+6. On the admin, click the "Upload Now" button.
+7. Try adding an image from the media uploader or from within a post. File uploading will be slower due to moving the files to the CDN on the fly.
 
 ### Frequently Asked Questions
 

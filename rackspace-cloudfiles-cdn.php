@@ -25,7 +25,7 @@ define('CFCDN_LOADING_URL', plugins_url('/assets/images/loading.gif' , __FILE__)
 
 require_once(ABSPATH.'wp-admin/includes/upgrade.php');
 
-require __DIR__ . '/vendor/autoload.php';
+require ABSPATH.'vendor/autoload.php';
 
 /**
  *  Register and enqueue frontend CSS
