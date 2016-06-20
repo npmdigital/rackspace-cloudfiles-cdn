@@ -12,6 +12,7 @@ function cfcdn_rewrite_on_fly( $content ) {
 }
 add_filter( "the_content", "cfcdn_rewrite_on_fly" );
 add_filter('wp_get_attachment_url', 'cfcdn_rewrite_on_fly');
+add_filter('wp_get_attachment_thumb_url', 'cfcdn_rewrite_on_fly');
 
 
 
