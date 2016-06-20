@@ -12,7 +12,7 @@ Moves files uploaded through Media Manager to Cloudfiles automatically, and rewr
 
 ### Installation
 
-1. Add a `composer.json` file to the root of your WP install. This will set the PHP version 
+1. Add a `composer.json` file to the root of your WP install. This will set the PHP version and setup autoloading for the plugin.
 ```json
 {
   "require": {
